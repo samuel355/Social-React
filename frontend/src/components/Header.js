@@ -31,7 +31,7 @@ const Header = () => {
                 </MDBNavbarBrand>
                 {
                     user?.result ? (
-                        <span>Welcome Back {user.result.name} </span>
+                        <span>Welcome {user.result.name} </span>
                     ) : (<></>)
                 }
                 <MDBNavbarToggler
