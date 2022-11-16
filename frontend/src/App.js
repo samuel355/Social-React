@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Header from './components/Header';
+import CreateTour from './pages/CreateTour';
 
 function App() {
   return (  
@@ -12,11 +13,15 @@ function App() {
       <div>
         <Header />
         <ToastContainer />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-        </Routes>
+        <div style={{marginTop: '5rem'}}>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/create' element={<CreateTour />} />
+            <Route path='/edit-tour:id' element={<CreateTour />} />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
