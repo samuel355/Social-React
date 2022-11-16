@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
-import { MDBCard, MDBCardBody, MDBCardFooter, MDBValidation, MDBValidationItem, MDBSpinner, MDBBtn, MDBInput, } from 'mdb-react-ui-kit'
+import React, {useEffect, useState} from 'react'
+import { MDBCard, MDBValidation, MDBValidationItem, MDBSpinner, MDBBtn, MDBInput, } from 'mdb-react-ui-kit'
 import ChipInput from 'material-ui-chip-input'
 import FileBase from 'react-file-base64'
 import {toast} from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
+
+import {useDispatch, useSelector} from 'react-redux'
+import { createTour } from '../redux/features/tourSlice';
 
 const initialState = {
   title: "",
@@ -14,8 +17,12 @@ const initialState = {
 const CreateTour = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [toursData, setToursData] = useState(initialState)
   const {title, description, tags} = toursData
+
+  const {error, loading} = useSelector((state) => ({...state.tour}))
+  const {user} = useSelector((state) => ({...state.auth}))
 
   const onInputChange = (e) => {
     e.preventDefault()
@@ -25,7 +32,11 @@ const CreateTour = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault() 
-
+    if(title && description && tags){
+      const updatedTourData = {...toursData, name: user?.result?.name}
+      dispatch(createTour({updatedTourData, navigate, toast}))
+      handleClear()
+    }
   }
 
   const handleAddTag = (tag) => {
@@ -48,6 +59,11 @@ const CreateTour = () => {
       tags: []
     })
   }
+
+  useEffect(() => {
+    error && toast.error(error)
+  },[error])
+
   return (
     <div 
       className='container'
@@ -61,6 +77,11 @@ const CreateTour = () => {
     >
       <MDBCard alignment='center'>
         <h5 style={{marginTop: '10px'}}>Add Tour</h5>
+        {
+          loading && (
+            <MDBSpinner size='sm' role='' />
+          )
+        }
         <MDBValidation onSubmit={handleSubmit} style={{padding: '15px'}}>
           <MDBValidationItem feedback="Please provide tour Title" invalid  className="col-md-12">
             <MDBInput 

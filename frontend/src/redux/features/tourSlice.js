@@ -2,9 +2,9 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import * as api from '../api'
 
 //Create Tour
-export const createTour = createAsyncThunk("tour/createTour", async ({tourData, navigate, toast}, {rejectWithValue}) => { 
+export const createTour = createAsyncThunk("tour/createTour", async ({updatedTourData, navigate, toast}, {rejectWithValue}) => { 
     try {
-        const response = await api.createTour(tourData)
+        const response = await api.createTour(updatedTourData)
         toast.success("Tour Created Successfully");
         navigate('/');
         return response.data;
