@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner} from 'mdb-react-ui-kit'
+import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner, MDBValidationItem} from 'mdb-react-ui-kit'
 import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
@@ -50,7 +50,7 @@ const Login = () => {
             }
             <MDBCardBody>
                 <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
-                    <div className="col-md-12">
+                    <MDBValidationItem feedback="Please provide your email" invalid className="col-md-12">
                         <MDBInput 
                           label="Email" 
                           type='email' 
@@ -58,12 +58,11 @@ const Login = () => {
                           name="email" 
                           onChange ={onInputChange} 
                           required 
-                          invalid 
-                          validation="Please provide your email" 
+                           
                         />
-                    </div>
+                    </MDBValidationItem>
 
-                    <div className="col-md-12">
+                    <MDBValidationItem feedback="Please provide your password" invalid  className="col-md-12">
                         <MDBInput 
                           label="Password" 
                           type='password' 
@@ -71,10 +70,9 @@ const Login = () => {
                           name="password" 
                           onChange ={onInputChange} 
                           required 
-                          invalid 
-                          validation="Please provide your password" 
+                          
                         />
-                    </div>
+                    </MDBValidationItem>
                     <div className="col-12">
                         <MDBBtn style={{width: "100%"}} className="mt-2">
                             Login
