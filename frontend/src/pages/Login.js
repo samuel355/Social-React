@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner, MDBFooter } from 'mdb-react-ui-kit'
+import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner} from 'mdb-react-ui-kit'
 import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
@@ -84,11 +84,11 @@ const Login = () => {
                 </MDBValidation>
             </MDBCardBody>
 
-            <MDBFooter>
+            <MDBCardFooter>
                 <Link to={"/register"}>
                     <p>Don't have an account ? Sign up </p>
                 </Link>
-            </MDBFooter>
+            </MDBCardFooter>
             
         </MDBCard>
     </div>
