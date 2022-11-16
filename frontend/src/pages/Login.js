@@ -17,6 +17,8 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const {loading, error,} = useSelector((state) => ({...state.auth}))
+
     const onInputChange = (e) => {
         e.preventDefault() 
         let {name, value} = e.target;
@@ -31,12 +33,21 @@ const Login = () => {
         }
     }
 
+    //Only run when there's an error
+    useEffect(() =>{
+        error && toast.error(error);
+    }, [error])
 
   return (
     <div style={{margin: 'auto', padding: '15px', maxWidth: '500px', alignContent: 'center', marginTop: '120px'}}>
         <MDBCard alignment='center' style={{padding: '15px'}}>
             <MDBIcon fas icon="user-circle" className='fa-2x' />
             <h4>Log In</h4>
+            {
+                loading && (
+                    <MDBSpinner size='sm' role="status" tag="span" className='me-2 center' />
+                )
+            }
             <MDBCardBody>
                 <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
                     <div className="col-md-12">
@@ -78,6 +89,7 @@ const Login = () => {
                     <p>Don't have an account ? Sign up </p>
                 </Link>
             </MDBFooter>
+            
         </MDBCard>
     </div>
   );
