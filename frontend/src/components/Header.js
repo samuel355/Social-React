@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {setLogout} from '../redux/features/authSlice'
 import {
     MDBNavbar,
     MDBContainer,
@@ -17,13 +18,22 @@ const Header = () => {
 
     const dispatch = useDispatch()
     const {user} = useSelector((state) => ({...state.auth}))
-    console.log(user)
+    
+    const handleLogout = () => {
+        dispatch(setLogout())
+    }
     return (
         <MDBNavbar fixed='top' expand='lg' style={{backgroundColor: '#f0e6ea'}}>
             <MDBContainer>
+                
                 <MDBNavbarBrand style={{color: '#606089',fontWeight: '600', fontSize: '22px'}} href="/" >
                     React Social
                 </MDBNavbarBrand>
+                {
+                    user?.result ? (
+                        <span>Welcome Back {user.result.name} </span>
+                    ) : (<></>)
+                }
                 <MDBNavbarToggler
                     type="button"
                     aria-expanded="false"
@@ -58,8 +68,8 @@ const Header = () => {
                                     </MDBNavbarItem>
 
                                     <MDBNavbarItem>
-                                        <MDBNavbarLink href='/logout'> 
-                                            <p className='header-text'> Logout </p>
+                                        <MDBNavbarLink href='/'> 
+                                            <p className='header-text' onClick={handleLogout}> Logout </p>
                                         </MDBNavbarLink>
                                     </MDBNavbarItem>
                                 </>

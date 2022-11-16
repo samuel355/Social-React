@@ -45,9 +45,18 @@ export const googleSignIn = createAsyncThunk("auth/googleSignIn", async ({result
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        user: null,
+        user: localStorage.getItem('profile') !== undefined ? JSON.parse(localStorage.getItem('profile')) : null,
         error: "",
         loading: false
+    },
+
+    reducers: {
+        setLogout : (state, action) => {
+            state.user = null;
+            localStorage.removeItem('profile');
+            //localStorage.clear()
+            document.location.href = '/'
+        }
     },
 
     extraReducers: {
@@ -94,5 +103,7 @@ const authSlice = createSlice({
         },
     }
 })
+
+export const {setLogout} = authSlice.actions;
 
 export default authSlice.reducer;
