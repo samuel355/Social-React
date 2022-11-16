@@ -5,4 +5,6 @@ const API = axios.create({
 })
 export const signIn = (formData) => API.post('/login', formData);
 
-export const signUp =  (formData) => API.post('/signup', formData)
+export const signUp = (formData) => API.post('/signup', formData)
+
+export const googleSignIn = (result) => API.post('/googleSignIn', result)

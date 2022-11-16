@@ -3,7 +3,10 @@ import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MD
 import {Link, useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
-import { login } from '../redux/features/authSlice'
+import { login, googleSignIn } from '../redux/features/authSlice'
+
+import {GoogleLogin} from 'react-google-login'
+import { gapi } from 'gapi-script';
 
 const initialState = {
     email: "",
@@ -33,10 +36,39 @@ const Login = () => {
         }
     }
 
+    const googleSuccess = (resp) =>{
+        const email = resp?.profileObj.email
+        const name = resp?.profileObj.name
+        const token = resp?.tokenId
+        const googleId = resp?.googleId 
+        const result = {email, name, token, googleId}
+        dispatch(googleSignIn({result, navigate, toast}))
+        
+    }
+
+    const googleFailure = (error) =>{
+        console.log(error)
+        toast.error('Sorry something went wrong. Try again later')
+    }
+
     //Only run when there's an error
     useEffect(() =>{
         error && toast.error(error);
     }, [error])
+
+    const clientId="68788342542-qr98h7o358n4nuh6aqb4qtf3uuhscnge.apps.googleusercontent.com"
+    //ClientID:  68788342542-qr98h7o358n4nuh6aqb4qtf3uuhscnge.apps.googleusercontent.com
+    //Client Secret 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
+
+    useEffect(() => {
+        const initClient = () => {
+                gapi.client.init({
+                clientId: clientId,
+                scope: ''
+            });
+        };
+        gapi.load('client:auth2', initClient);
+    },[]);
 
   return (
     <div style={{margin: 'auto', padding: '15px', maxWidth: '500px', alignContent: 'center', marginTop: '120px'}}>
@@ -80,6 +112,27 @@ const Login = () => {
                     </div>
                         
                 </MDBValidation>
+
+                <GoogleLogin 
+                    clientId={clientId}
+                    render={
+                        (renderProps) => (
+                            <MDBBtn 
+                                style={{width: '100%', marginTop: 10}} 
+                                color="danger" 
+                                onClick={renderProps.onClick} 
+                                disabled={renderProps.disabled}
+                            >
+                                <MDBIcon className='me-2' fab icon="google" /> Google Sign In
+
+                            </MDBBtn>
+                        )
+                    }
+
+                    onSuccess={googleSuccess}
+                    onFailure={googleFailure}
+                    cookiePolicy ={"single_host_origin"}
+                />
             </MDBCardBody>
 
             <MDBCardFooter>
