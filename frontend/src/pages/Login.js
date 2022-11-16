@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {MDBCard, MDBCardBody, MDBInput, MDBCardFooter, MDBValidation, MDBBtn, MDBIcon, MDBSpinner, MDBFooter } from 'mdb-react-ui-kit'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {useDispatch, useSelector} from 'react-redux'
+import { login } from '../redux/features/authSlice'
 
 const initialState = {
     email: "",
@@ -11,15 +14,23 @@ const Login = () => {
     const [formValue, setFormValue] = useState(initialState)
     const {email, password} = formValue
 
-    const handleSubmit = (e) => {
-        e.preventDefault() 
-    }
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const onInputChange = (e) => {
         e.preventDefault() 
         let {name, value} = e.target;
         setFormValue({...formValue, [name]: value})
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault() 
+        if(email && password){
+            dispatch(login({formValue, navigate, toast}))
+            console.log(formValue)
+        }
+    }
+
 
   return (
     <div style={{margin: 'auto', padding: '15px', maxWidth: '500px', alignContent: 'center', marginTop: '120px'}}>
