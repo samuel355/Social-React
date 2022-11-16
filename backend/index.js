@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import morgan from 'morgan'
 import userRouter from './routes/user.js'
+import tourRouter from './routes/tour.js'
 
 const mongoose_link = "mongodb+srv://sobal_official:Confirmation12@cluster0.4wduhw2.mongodb.net/React-Social?retryWrites=true&w=majority"
 
@@ -32,3 +33,4 @@ const connectDB = async () => {
 connectDB()
 
 app.use('/', userRouter) //http://localhost:8000/signup
+app.use('/', tourRouter)
