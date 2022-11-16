@@ -10,7 +10,9 @@ export const createTour = createAsyncThunk("tour/createTour", async ({updatedTou
         return response.data;
 
     } catch (error) {
+        console.log(error)
         return rejectWithValue(error.response.data)
+
     }
 })
 
