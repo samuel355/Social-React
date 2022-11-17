@@ -32,5 +32,7 @@ const connectDB = async () => {
 
 connectDB()
 
+app.get('/check', (req, res) => {res.send('server working')})
+
 app.use('/', userRouter) //http://localhost:8000/signup
 app.use('/', tourRouter)
