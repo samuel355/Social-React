@@ -8,6 +8,7 @@ import Header from './components/Header';
 import CreateTour from './pages/CreateTour';
 import SingleTour from './pages/SingleTour';
 import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (  
@@ -20,10 +21,10 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/create' element={<CreateTour />} />
+            <Route path='/create' element={<PrivateRoute><CreateTour /></PrivateRoute> } />
             <Route path='/tour/:id' element={<SingleTour />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/edit-tour/:id' element={<CreateTour />} />
+            <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path='/edit-tour/:id' element={<PrivateRoute><CreateTour /></PrivateRoute>} />
           </Routes>
         </div>
       </div>
