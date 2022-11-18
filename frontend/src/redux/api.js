@@ -22,5 +22,9 @@ export const googleSignIn = (result) => API.post('/googleSignIn', result)
 
 //Create Tour
 export const createTour = (tourData) => API.post('/create', tourData)
+//Get all Tours
 export const getTours = () => API.get('/tours')
-export const getTour = (id) => API.get(`/tour/${id}`)
+//Get Single Tour detail by id
+export const getTour = (id) => API.get(`/tour/${id}`) 
+//Get Tours created by user
+export const getToursByUser = (userId) => API.get(`/tours/userTours/${userId}`) 

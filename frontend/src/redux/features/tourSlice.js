@@ -29,10 +29,23 @@ export const getTours = createAsyncThunk("tour/allTours", async (_, {rejectWithV
     }
 })
 
-//Get single tour Tour
+//Get single tour 
 export const getTour = createAsyncThunk("tour/getTour", async (id, {rejectWithValue}) => { 
     try {
         const response = await api.getTour(id)
+        return response.data;
+
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error.response.data)
+
+    }
+})
+
+//Get tours created by a user 
+export const getUserTours = createAsyncThunk("tour/getUserTours", async (userId, {rejectWithValue}) => { 
+    try {
+        const response = await api.getToursByUser(userId)
         return response.data;
 
     } catch (error) {
@@ -96,6 +109,18 @@ const tourSlice = createSlice({
             state.error = action.payload.message
         },
 
+        // //getUserTours cycle
+        [getUserTours.pending]: (state, action) => {
+            state.loading = true
+        },
+        [getUserTours.fulfilled] : (state, action ) => {
+            state.loading = false;
+            state.userTours = action.payload
+        },
+        [getUserTours.rejected] : (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
     }
 })
 

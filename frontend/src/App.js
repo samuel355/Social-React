@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Header from './components/Header';
 import CreateTour from './pages/CreateTour';
 import SingleTour from './pages/SingleTour';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (  
@@ -21,6 +22,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/create' element={<CreateTour />} />
             <Route path='/tour/:id' element={<SingleTour />} />
+            <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/edit-tour:id' element={<CreateTour />} />
           </Routes>
         </div>

@@ -1,3 +1,4 @@
+import mongoose  from 'mongoose'
 import Tour from '../models/tours.js'
 
 //Create Tour
@@ -38,4 +39,15 @@ export const getTour = async (req, res) => {
         res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
         console.log(error)
     }
+}
+
+//Fetching tours created by the user
+export const getToursByUser = async (req, res) => {
+    const {userId} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(userId)){
+        return res.status(404).json({message: 'User does not exist'})
+    }
+
+    const userTours = await Tour.find({creator: userId})
+    res.status(200).json(userTours)
 }
