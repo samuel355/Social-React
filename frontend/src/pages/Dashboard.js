@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBIcon, MDBBtn, MDBCardGroup} from 'mdb-react-ui-kit'
 import {Link} from 'react-router-dom'
 import {getUserTours} from '../redux/features/tourSlice'
+import Spinner from '../components/Spinner';
 
 const Dashboard = () => {
 
@@ -23,6 +24,10 @@ const Dashboard = () => {
             str = str.substring(0, 45) + '...'
         }
         return str
+    }
+
+    if(loading){
+        return (<Spinner />)
     }
 
     return (
