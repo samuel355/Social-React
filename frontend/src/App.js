@@ -23,7 +23,7 @@ function App() {
             <Route path='/create' element={<CreateTour />} />
             <Route path='/tour/:id' element={<SingleTour />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/edit-tour:id' element={<CreateTour />} />
+            <Route path='/edit-tour/:id' element={<CreateTour />} />
           </Routes>
         </div>
       </div>

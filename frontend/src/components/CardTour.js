@@ -35,6 +35,9 @@ const CardTour = ({imageFile, description, title, tags, name, creator, _id}) => 
                 </MDBCardText>
             </MDBCardBody>
 
+            <div>
+                
+            </div>
         </MDBCard>
     </MDBCardGroup>
   )
