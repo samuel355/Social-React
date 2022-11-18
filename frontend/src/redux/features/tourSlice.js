@@ -29,6 +29,19 @@ export const getTours = createAsyncThunk("tour/allTours", async (_, {rejectWithV
     }
 })
 
+//Get single tour Tour
+export const getTour = createAsyncThunk("tour/getTour", async (id, {rejectWithValue}) => { 
+    try {
+        const response = await api.getTour(id)
+        return response.data;
+
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error.response.data)
+
+    }
+})
+
 const tourSlice = createSlice({
     name: 'tour',
     initialState: {
@@ -66,6 +79,19 @@ const tourSlice = createSlice({
             state.tours = action.payload
         },
         [getTours.rejected] : (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+
+        //getTour cycle
+        [getTour.pending]: (state, action) => {
+            state.loading = true
+        },
+        [getTour.fulfilled] : (state, action ) => {
+            state.loading = false;
+            state.tour = action.payload
+        },
+        [getTour.rejected] : (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },

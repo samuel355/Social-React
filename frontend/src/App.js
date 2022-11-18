@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Header from './components/Header';
 import CreateTour from './pages/CreateTour';
+import SingleTour from './pages/SingleTour';
 
 function App() {
   return (  
@@ -19,6 +20,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/create' element={<CreateTour />} />
+            <Route path='/tour/:id' element={<SingleTour />} />
             <Route path='/edit-tour:id' element={<CreateTour />} />
           </Routes>
         </div>

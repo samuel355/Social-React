@@ -27,3 +27,15 @@ export const fetchTours = async (req, res) => {
         console.log(error)
     }
 }
+
+//Fetch single tour with id 
+export const getTour = async (req, res) => {
+    const {id} = req.params
+     try {
+        const tour = await Tour.findById(id)
+        res.status(200).json(tour)
+    } catch (error) {
+        res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
+        console.log(error)
+    }
+}
