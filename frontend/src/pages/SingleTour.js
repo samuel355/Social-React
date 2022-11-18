@@ -32,9 +32,9 @@ const SingleTour = () => {
                 </span>
 
                 <div style={{float: 'left'}}>
-                    <span style={{background: 'grey', padding: '2px', borderRadius: '5px', color: 'white', marginLeft: '5px', marginRight: '5px'}}>
+                    <span>
                         {
-                           tour.tags?.map((tag) => `#${tag}`)
+                           tour.tags?.map((tag) =>  <span style={{background: 'grey', padding: '2px', borderRadius: '5px', color: 'white', marginLeft: '5px', marginRight: '5px'}}> {`#${tag}`} </span>)
                         }
                     </span>
                 </div>
