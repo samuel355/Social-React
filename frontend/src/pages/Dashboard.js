@@ -33,34 +33,36 @@ const Dashboard = () => {
                 userTours && userTours.map((userTour) => (
                     <MDBCardGroup key={userTour._id}>
                         <MDBCard style={{maxWidth: '600px', marginTop: '10px'}}>
-                            <MDBCol md="4">
-                                <MDBCardImage 
-                                    className='rounded'
-                                    src={userTour.imageFile}
-                                    alt={userTour.title}
-                                    fluid
-                                />
-                            </MDBCol>
-                            <MDBCol md="8">
-                                <MDBCardBody>
-                                    <MDBCardTitle className='text-start'>
-                                        {userTour.title}
-                                    </MDBCardTitle>
-                                    <MDBCardText className='text-start'>
-                                        {excerpt(userTour.description)}
-                                        <Link to={`/tour/${userTour._id}`}>Read More </Link>
-                                    </MDBCardText>
-                                    <div style={{marginLeft: '5px', float: 'right', marginTop: '-60px'}}>
-                                        <MDBBtn className='mt-1' tag="a" color="none">
-                                            <MDBIcon fas icon='trash' style={{color: '#dd4b39'}} size="lg" />
-                                        </MDBBtn>
+                            <MDBRow>
+                                <MDBCol md="4">
+                                    <MDBCardImage 
+                                        className='rounded'
+                                        src={userTour.imageFile}
+                                        alt={userTour.title}
+                                        fluid
+                                        />
+                                </MDBCol>
+                                <MDBCol md="8">
+                                    <MDBCardBody>
+                                        <MDBCardTitle className='text-start'>
+                                            {userTour.title}
+                                        </MDBCardTitle>
+                                        <MDBCardText className='text-start'>
+                                            {excerpt(userTour.description)}
+                                            <Link to={`/tour/${userTour._id}`}>Read More </Link>
+                                        </MDBCardText>
+                                        <div style={{marginLeft: '5px', float: 'right', marginTop: '-60px'}}>
+                                            <MDBBtn className='mt-1' tag="a" color="none">
+                                                <MDBIcon fas icon='trash' style={{color: '#dd4b39'}} size="lg" />
+                                            </MDBBtn>
 
-                                        <Link to={`/edit-tour/${userTour._id}`} className='mt-1' tag="a" color="none">
-                                            <MDBIcon fas icon='edit' style={{color: '#55acee', marginLeft: '15px'}} size="lg" />
-                                        </Link>
-                                    </div>
-                                </MDBCardBody>
-                            </MDBCol>
+                                            <Link to={`/edit-tour/${userTour._id}`} className='mt-1' tag="a" color="none">
+                                                <MDBIcon fas icon='edit' style={{color: '#55acee', marginLeft: '15px'}} size="lg" />
+                                            </Link>
+                                        </div>
+                                    </MDBCardBody>
+                                </MDBCol>
+                            </MDBRow>
                         </MDBCard>
                     </MDBCardGroup>
                 ))
