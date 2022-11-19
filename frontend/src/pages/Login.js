@@ -32,7 +32,6 @@ const Login = () => {
         e.preventDefault() 
         if(email && password){
             dispatch(login({formValue, navigate, toast}))
-            console.log(formValue)
         }
     }
 

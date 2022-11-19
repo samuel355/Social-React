@@ -51,3 +51,43 @@ export const getToursByUser = async (req, res) => {
     const userTours = await Tour.find({creator: userId})
     res.status(200).json(userTours)
 }
+
+//Deleting Tour
+export const deleteTour = async (req, res) => {
+    const {id} = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({message: `This tour does not exist: ${id}`})
+    }
+
+    await Tour.findByIdAndRemove(id)
+    res.json({message: 'Tour Deleted Successfully'})
+}
+
+//Update Tour
+export const updateTour = async (req, res) => {
+    const {id} = req.params;
+    const {title, description, imageFile, creator, tags} = req.body
+
+    try {
+        
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(404).json({message: `This tour does not exist: ${id}`})
+        }
+        const updatedTour = {
+            creator,
+            title,
+            description,
+            tags,
+            imageFile,
+            _id: id
+        }
+
+        await Tour.findByIdAndUpdate(id, updatedTour, {new: true})
+        res.json(updatedTour)
+    } catch (error) {
+        res.status(404).json({message: `Sorry Something went wrong`})
+        console.log(error)
+    }
+
+}

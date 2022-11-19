@@ -2,8 +2,9 @@ import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBIcon, MDBBtn, MDBCardGroup} from 'mdb-react-ui-kit'
 import {Link} from 'react-router-dom'
-import {getUserTours} from '../redux/features/tourSlice'
+import {deleteCreatorTour, getUserTours} from '../redux/features/tourSlice'
 import Spinner from '../components/Spinner';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
 
@@ -28,6 +29,13 @@ const Dashboard = () => {
 
     if(loading){
         return (<Spinner />)
+    }
+
+    //Delete tour
+    const handleDelete = (id) => {
+        if(window.confirm("Are you sure you want to delete this tour? ")){
+            dispatch(deleteCreatorTour({id, toast}))
+        }
     }
 
     return (
@@ -58,7 +66,7 @@ const Dashboard = () => {
                                         </MDBCardText>
                                         <div style={{marginLeft: '5px', float: 'right', marginTop: '-60px'}}>
                                             <MDBBtn className='mt-1' tag="a" color="none">
-                                                <MDBIcon fas icon='trash' style={{color: '#dd4b39'}} size="lg" />
+                                                <MDBIcon fas icon='trash' style={{color: '#dd4b39'}} size="lg" onClick={() => handleDelete(userTour._id)} />
                                             </MDBBtn>
 
                                             <Link to={`/edit-tour/${userTour._id}`} className='mt-1' tag="a" color="none">
