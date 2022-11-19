@@ -72,11 +72,11 @@ export const deleteCreatorTour = createAsyncThunk("tour/deleteCreatorTour", asyn
 })
 
 //Update Tour by creator
-export const updateCreatorTour = createAsyncThunk("tour/updateCreatorTour", async ({id, updatedTour, toast, navigate}, {rejectWithValue}) => { 
+export const updateCreatorTour = createAsyncThunk("tour/updateCreatorTour", async ({id, updatedTourData, toast, navigate}, {rejectWithValue}) => { 
     try {
-        const response = await api.updateTourByUser(updatedTour, id)
+        const response = await api.updateTourByUser(updatedTourData, id)
         toast.success("Tour updated Successfully");
-        navigate('/')
+        navigate('/dashboard')
 
         return response.data;
 

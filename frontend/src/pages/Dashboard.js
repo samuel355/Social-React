@@ -61,7 +61,7 @@ const Dashboard = () => {
                                             {userTour.title}
                                         </MDBCardTitle>
                                         <MDBCardText className='text-start'>
-                                            {excerpt(userTour.description)}
+                                            {excerpt(userTour.description)} <br />
                                             <Link to={`/tour/${userTour._id}`}>Read More </Link>
                                         </MDBCardText>
                                         <div style={{marginLeft: '5px', float: 'right', marginTop: '-60px'}}>

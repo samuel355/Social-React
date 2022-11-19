@@ -9,6 +9,7 @@ import CreateTour from './pages/CreateTour';
 import SingleTour from './pages/SingleTour';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (  
@@ -25,6 +26,7 @@ function App() {
             <Route path='/tour/:id' element={<SingleTour />} />
             <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path='/edit-tour/:id' element={<PrivateRoute><CreateTour /></PrivateRoute>} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </div>
