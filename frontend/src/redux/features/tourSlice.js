@@ -71,6 +71,22 @@ export const deleteCreatorTour = createAsyncThunk("tour/deleteCreatorTour", asyn
     }
 })
 
+//Update Tour by creator
+export const updateCreatorTour = createAsyncThunk("tour/updateCreatorTour", async ({id, updatedTour, toast, navigate}, {rejectWithValue}) => { 
+    try {
+        const response = await api.updateTourByUser(updatedTour, id)
+        toast.success("Tour updated Successfully");
+        navigate('/')
+
+        return response.data;
+
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error.response.data)
+
+    }
+})
+
 const tourSlice = createSlice({
     name: 'tour',
     initialState: {
@@ -152,6 +168,24 @@ const tourSlice = createSlice({
             }
         },
         [deleteCreatorTour.rejected] : (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+
+        // Update Tour cycle
+        [updateCreatorTour.pending]: (state, action) => {
+            state.loading = true
+        },
+        [updateCreatorTour.fulfilled] : (state, action ) => {
+            state.loading = false;
+            console.log("action", action)
+            const {arg: {id}} = action.meta
+            if(id){
+                state.userTours = state.userTours.map((item) => item._id === id ? action.payload : item)
+                state.tours = state.userTours.map((item) => item._id === id ? action.payload : item)
+            }
+        },
+        [updateCreatorTour.rejected] : (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },
