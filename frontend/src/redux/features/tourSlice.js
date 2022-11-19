@@ -179,10 +179,10 @@ const tourSlice = createSlice({
         [updateCreatorTour.fulfilled] : (state, action ) => {
             state.loading = false;
             console.log("action", action)
-            const {arg: {id}} = action.meta
+            const {arg: {id},} = action.meta
             if(id){
                 state.userTours = state.userTours.map((item) => item._id === id ? action.payload : item)
-                state.tours = state.userTours.map((item) => item._id === id ? action.payload : item)
+                state.tours = state.tours.map((item) => item._id === id ? action.payload : item)
             }
         },
         [updateCreatorTour.rejected] : (state, action) => {

@@ -23,7 +23,7 @@ const CardTour = ({imageFile, description, title, tags, name, creator, _id}) => 
             <div className="top-left">{name}</div>
             <span className="text-start tag-card">
                 {
-                    tags.map((tag) => `#${tag}` )
+                    tags?.map((tag) => `#${tag}` )
                 }
             </span>
 

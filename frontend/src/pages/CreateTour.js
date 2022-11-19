@@ -3,10 +3,10 @@ import { MDBCard, MDBValidation, MDBValidationItem, MDBSpinner, MDBBtn, MDBInput
 import ChipInput from 'material-ui-chip-input'
 import FileBase from 'react-file-base64'
 import {toast} from 'react-toastify'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 import {useDispatch, useSelector} from 'react-redux'
-import { createTour } from '../redux/features/tourSlice';
+import { createTour, updateCreatorTour } from '../redux/features/tourSlice';
 
 const initialState = {
   title: "",
@@ -14,6 +14,7 @@ const initialState = {
   tags: [],
 
 }
+
 const CreateTour = () => {
 
   const navigate = useNavigate()
@@ -21,8 +22,18 @@ const CreateTour = () => {
   const [toursData, setToursData] = useState(initialState)
   const {title, description, tags} = toursData
 
-  const {error, loading} = useSelector((state) => ({...state.tour}))
+  const {id} = useParams()
+
+  const {error, loading, userTours} = useSelector((state) => ({...state.tour}))
   const {user} = useSelector((state) => ({...state.auth}))
+
+  //copy and paste the tour to be edited
+  useEffect(() => {
+    if(id){
+      const singleTour = userTours.find((tour) => tour._id ===id)
+      setToursData({...singleTour})
+    }
+  },[id, userTours])
 
   const onInputChange = (e) => {
     e.preventDefault()
@@ -34,8 +45,15 @@ const CreateTour = () => {
     e.preventDefault() 
     if(title && description && tags){
       const updatedTourData = {...toursData, name: user?.result?.name}
-      dispatch(createTour({updatedTourData, navigate, toast}))
-      handleClear()
+
+      if(!id){
+        dispatch(createTour({updatedTourData, navigate, toast}))
+        handleClear()
+      }else{
+        dispatch(updateCreatorTour({id, updatedTourData, toast, navigate}))
+        handleClear()
+      }
+
     }
   }
 
@@ -76,7 +94,7 @@ const CreateTour = () => {
       }}
     >
       <MDBCard alignment='center'>
-        <h5 style={{marginTop: '10px'}}>Add Tour</h5>
+        <h5 style={{marginTop: '10px'}}>{id ? "Update" : "Add Tour"}</h5>
         {
           loading && (
             <MDBSpinner size='sm' role='' />
@@ -126,7 +144,7 @@ const CreateTour = () => {
 
           <div className="col-12 mt-5" >
               <MDBBtn style={{width: "100%", marginTop: '30px'}} className="mt-2">
-                  Create Tour
+                  {id ? "Update" : "Create Tour"}
               </MDBBtn>
           </div>
 
