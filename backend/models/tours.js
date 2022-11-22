@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const tourSchema = mongoose.Schema({
-    title: {type: String, required:true},
-    description: {type: String},
-    name: {type: String, required:true},
-    creator: {type: String},
+    title: String,
+    description: String,
+    name: String,
+    creator: String,
     tags: [String],
     imageFile: String,
     likeCount: {type: Number, default: 0}

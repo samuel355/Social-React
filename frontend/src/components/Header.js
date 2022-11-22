@@ -12,9 +12,13 @@ import {
     MDBNavbarToggler,
     MDBIcon
 } from 'mdb-react-ui-kit'
+import { searchTour } from '../redux/features/tourSlice'
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate()
     const [show, setShow] = useState(false)
+    const [search, setSearch] = useState("")
 
     const dispatch = useDispatch()
     const {user} = useSelector((state) => ({...state.auth}))
@@ -22,6 +26,18 @@ const Header = () => {
     const handleLogout = () => {
         dispatch(setLogout())
     }
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault() 
+        if(search){
+            dispatch(searchTour(search))
+            navigate(`/tours/search?searchQuery=${search}`)
+            setSearch('')
+        }else{
+            navigate('/')
+        }
+    }
+
     return (
         <MDBNavbar fixed='top' expand='lg' style={{backgroundColor: '#f0e6ea'}}>
             <MDBContainer>
@@ -87,6 +103,20 @@ const Header = () => {
                                 <></>
                             )
                         }
+
+                        <MDBNavbarItem >
+                            <form className='d-flex input-group w-auto' style={{marginTop: '12px'}} onSubmit={handleSearchSubmit}>
+                                <input type="text" 
+                                    className='form-control'
+                                    placeholder='Search Tour'
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                <div style={{marginTop: '5px', marginLeft: '5px'}}>
+                                    <MDBIcon fas icon='search' />
+                                </div>
+                            </form>
+                        </MDBNavbarItem>
 
                     </MDBNavbarNav>
                 </MDBCollapse>

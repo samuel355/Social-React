@@ -4,6 +4,9 @@ import cors from 'cors'
 import morgan from 'morgan'
 import userRouter from './routes/user.js'
 import tourRouter from './routes/tour.js'
+import tourModel from "./models/tours.js";
+import asyncHandler from 'express-async-handler'
+import User from "./models/user.js";
 
 const mongoose_link = "mongodb+srv://sobal_official:Confirmation12@cluster0.4wduhw2.mongodb.net/React-Social?retryWrites=true&w=majority"
 
@@ -33,6 +36,20 @@ const connectDB = async () => {
 connectDB()
 
 app.get('/check', (req, res) => {res.send('server working')})
+
+app.get('/fetch', asyncHandler(async(req, res) => {
+    try {
+        const tours = await tourModel.find({}).lean()
+        if(tours){
+            res.status(200).json(tours)
+        }else{
+            res.json({message: 'No Tour was found. you can Create new Tour'})
+        }
+    } catch (error) {
+        res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
+        console.log(error)
+    }
+}))
 
 app.use('/', userRouter) //http://localhost:8000/signup
 app.use('/', tourRouter)

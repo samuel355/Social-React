@@ -87,6 +87,21 @@ export const updateCreatorTour = createAsyncThunk("tour/updateCreatorTour", asyn
     }
 })
 
+//Search Tour
+export const searchTour = createAsyncThunk("tour/searchTour", async (searchQuery, {rejectWithValue}) => { 
+    try {
+        const response = await api.getToursBySearch(searchQuery)
+
+        return response.data;
+
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error.response.data)
+
+    }
+})
+
+
 const tourSlice = createSlice({
     name: 'tour',
     initialState: {
@@ -160,7 +175,6 @@ const tourSlice = createSlice({
         },
         [deleteCreatorTour.fulfilled] : (state, action ) => {
             state.loading = false;
-            console.log("action", action)
             const {arg: {id}} = action.meta
             if(id){
                 state.userTours = state.userTours.filter((item) => item._id !== id)
@@ -178,7 +192,6 @@ const tourSlice = createSlice({
         },
         [updateCreatorTour.fulfilled] : (state, action ) => {
             state.loading = false;
-            console.log("action", action)
             const {arg: {id},} = action.meta
             if(id){
                 state.userTours = state.userTours.map((item) => item._id === id ? action.payload : item)
@@ -186,6 +199,23 @@ const tourSlice = createSlice({
             }
         },
         [updateCreatorTour.rejected] : (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message
+        },
+
+        // Search Tour cycle
+        [searchTour.pending]: (state, action) => {
+            state.loading = true
+        },
+        [searchTour.fulfilled] : (state, action ) => {
+            state.loading = false;
+            const {arg: {id},} = action.meta
+            if(id){
+                state.userTours = state.userTours.map((item) => item._id === id ? action.payload : item)
+                state.tours = state.tours.map((item) => item._id === id ? action.payload : item)
+            }
+        },
+        [searchTour.rejected] : (state, action) => {
             state.loading = false;
             state.error = action.payload.message
         },

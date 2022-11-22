@@ -8,7 +8,6 @@ export const createTour = async (req, res) => {
         ...tour,
         creator: req.userId
     })
-
     try {
         newTour.save();
         res.status(201).json(newTour)
@@ -21,8 +20,27 @@ export const createTour = async (req, res) => {
 //Fetch all tours
 export const fetchTours = async (req, res) => {
     try {
-        const tours = await Tour.find()
-        res.status(200).json(tours)
+        const tours = await Tour.find().lean()
+        if(tours){
+            res.status(200).json(tours)
+        }else{
+            res.json({message: 'No Tour was found. you can Create new Tour'})
+        }
+    } catch (error) {
+        res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
+        console.log(error)
+    }
+}
+
+//Fetch all tours
+export const testTours = async (req, res) => {
+    try {
+        const tours = await Tour.find({}).lean()
+        if(tours){
+            res.status(200).json(tours)
+        }else{
+            res.json({message: 'No Tour was found. you can Create new Tour'})
+        }
     } catch (error) {
         res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
         console.log(error)
@@ -33,7 +51,7 @@ export const fetchTours = async (req, res) => {
 export const getTour = async (req, res) => {
     const {id} = req.params
      try {
-        const tour = await Tour.findById(id)
+        const tour = await Tour.findById(id).lean()
         res.status(200).json(tour)
     } catch (error) {
         res.status(404).json({message: 'Something went wrong fetching tours, try again later'})
@@ -48,7 +66,7 @@ export const getToursByUser = async (req, res) => {
         return res.status(404).json({message: 'User does not exist'})
     }
 
-    const userTours = await Tour.find({creator: userId})
+    const userTours = await Tour.find({creator: userId}).lean()
     res.status(200).json(userTours)
 }
 
@@ -60,7 +78,7 @@ export const deleteTour = async (req, res) => {
         return res.status(404).json({message: `This tour does not exist: ${id}`})
     }
 
-    await Tour.findByIdAndRemove(id)
+    await Tour.findByIdAndRemove(id).lean()
     res.json({message: 'Tour Deleted Successfully'})
 }
 
@@ -83,11 +101,27 @@ export const updateTour = async (req, res) => {
             _id: id
         }
 
-        await Tour.findByIdAndUpdate(id, updatedTour, {new: true})
+        await Tour.findByIdAndUpdate(id, updatedTour, {new: true}).lean()
         res.json(updatedTour)
     } catch (error) {
         res.status(404).json({message: `Sorry Something went wrong`})
         console.log(error)
     }
 
+}
+
+// Search Tour
+export const getToursBySearch = async(req, res) =>{
+    const {searchQuery} = req.query
+
+    try {
+        const title = new RegExp(searchQuery, 'i')
+        const tours = await Tour.find({title})
+
+        res.json(tours)
+
+    } catch (error) {
+        res.status(404).json({message: `Sorry Something went wrong`}) 
+        console.log(error) 
+    }
 }

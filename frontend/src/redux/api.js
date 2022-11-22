@@ -32,3 +32,5 @@ export const getToursByUser = (userId) => API.get(`/tours/userTours/${userId}`)
 export const deleteTourByUser = (id) => API.delete(`/tour/deleteTour/${id}`) 
 //Update Tour by creator
 export const updateTourByUser = (updatedTour, id) => API.patch(`/tour/updateTour/${id}`, updatedTour) 
+//Search Tour
+export const getToursBySearch = (searchQuery) => API.get(`/tour/search?searchQuery=${searchQuery}`)

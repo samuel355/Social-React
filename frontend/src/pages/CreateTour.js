@@ -132,6 +132,7 @@ const CreateTour = () => {
           </div>
 
           <div className="d-flex justify-content-start" style={{marginTop: "30px"}}>
+            
             <FileBase 
               type="file"
               multiple={false} 
@@ -140,6 +141,7 @@ const CreateTour = () => {
                 setToursData({...toursData, imageFile: base64}))
               } 
             />
+            
           </div>
 
           <div className="col-12 mt-5" >
